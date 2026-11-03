@@ -8,7 +8,7 @@ const links = [
 export default function Sidebar() {
   return (
     <aside>
-      <a className="brand" href="#inicio"><span>✳</span><b>meu fluxo</b></a>
+      <a className="brand" href="#inicio"><span>✳</span><b>AGL Finance</b></a>
       <div className="side-label">SEU ESPAÇO</div>
       <nav aria-label="Navegação principal">
         {links.map(([icon, label, href], index) => (
@@ -18,7 +18,7 @@ export default function Sidebar() {
         ))}
       </nav>
       <div className="side-bottom"><div className="small-icon">✳</div><strong>Um passo de cada vez.</strong><p>Pequenas escolhas constroem grandes planos.</p></div>
-      <div className="profile"><span>MF</span><div><b>Meu espaço</b><small>Finanças pessoais</small></div></div>
+      <div className="profile"><span>AGL</span><div><b>Meu espaço</b><small>Finanças pessoais</small></div></div>
     </aside>
   )
 }

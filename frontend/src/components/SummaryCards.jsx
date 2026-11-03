@@ -1,7 +1,7 @@
-const currency = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
+import { formatCents as currency, sumCents } from '../utils/money'
 
 export default function SummaryCards({ entries }) {
-  const total = types => entries.filter(entry => types.includes(entry.type)).reduce((sum, entry) => sum + entry.amount, 0)
+  const total = types => sumCents(entries.filter(entry => types.includes(entry.type)))
   const income = total(['income'])
   const fixed = total(['fixed'])
   const variable = total(['variable'])
@@ -14,7 +14,7 @@ export default function SummaryCards({ entries }) {
   ]
   return (
     <section id="inicio">
-      <div className="section-heading"><div><span className="overline">SEU RESUMO</span><h2>O seu mês em números</h2></div><span className="muted">Dados de demonstração</span></div>
+      <div className="section-heading"><div><span className="overline">SEU RESUMO</span><h2>O seu mês em números</h2></div><span className="muted">Mês selecionado</span></div>
       <div className="cards">{cards.map(card => (
         <article className={`card ${card.style === 'balance' ? 'balance' : ''}`} key={card.label}>
           <div className="card-top"><span>{card.label}</span><span className={card.style === 'balance' ? '' : `chip ${card.style}`} aria-hidden="true">{card.icon}</span></div>
