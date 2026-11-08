@@ -1,0 +1,6 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { makeClosing, isClosed, nextMonth, validateClosings } from '../src/utils/closing.js'
+const row=(date,type,amount)=>({date,type,amount})
+test('fecha com saldo anterior e transferências para reserva sem duplicar',()=>{const entries=[row('2026-09-01','income',3000),row('2026-09-02','fixed',2500),row('2026-10-01','income',1000),row('2026-10-02','variable',200),row('2026-10-03','saved',100)];const c=makeClosing(entries,'2026-10','2026-11-01T12:00:00.000Z');assert.deepEqual(c,{month:'2026-10',closedAt:'2026-11-01T12:00:00.000Z',opening:50000,income:100000,expenses:20000,saved:10000,ending:120000});assert.equal(validateClosings(entries,[c]),true);assert.equal(isClosed('2026-09',[c]),true);assert.equal(isClosed('2026-11',[c]),false)})
+test('valida sequência, virada de ano e adulteração do histórico',()=>{const entries=[row('2026-12-01','fixed',30)];const dec=makeClosing(entries,'2026-12','2027-01-01T00:00:00Z'),jan=makeClosing(entries,'2027-01','2027-02-01T00:00:00Z');assert.equal(nextMonth('2026-12'),'2027-01');assert.equal(dec.ending,-3000);assert.equal(jan.opening,-3000);assert.equal(validateClosings(entries,[dec,jan]),true);assert.equal(validateClosings(entries,[dec,{...jan,ending:0}]),false);assert.equal(validateClosings(entries,[dec,{...jan,month:'2027-02'}]),false)})

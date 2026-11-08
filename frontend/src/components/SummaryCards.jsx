@@ -1,13 +1,13 @@
 import { formatCents as currency, sumCents } from '../utils/money'
 
-export default function SummaryCards({ entries }) {
+export default function SummaryCards({ entries, opening = 0 }) {
   const total = types => sumCents(entries.filter(entry => types.includes(entry.type)))
   const income = total(['income'])
   const fixed = total(['fixed'])
   const variable = total(['variable'])
   const saved = total(['saved'])
   const cards = [
-    { label: 'Saldo disponível', value: income - fixed - variable - saved, detail: 'Depois dos gastos e do que você guardou', style: 'balance', icon: '↗' },
+    { label: 'Saldo disponível', value: opening + income - fixed - variable - saved, detail: 'Inclui o saldo dos meses anteriores', style: 'balance', icon: '↗' },
     { label: 'Entradas', value: income, detail: 'Sua renda no mês', style: 'green', icon: '↙' },
     { label: 'Despesas', value: fixed + variable, detail: `${currency(fixed)} fixos · ${currency(variable)} variáveis`, style: 'orange', icon: '↗' },
     { label: 'Guardado no mês', value: saved, detail: 'Um carinho para o futuro', style: 'purple', icon: '◇' },

@@ -3,6 +3,7 @@ const links = [
   ['⇄', 'Movimentações', '#movimentos'],
   ['◉', 'Categorias', '#categorias'],
   ['◇', 'Minha reserva', '#reserva'],
+  ['▤', 'Planejamento', '#planejamento'],
 ]
 
 export default function Sidebar() {
